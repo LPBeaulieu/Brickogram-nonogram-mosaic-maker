@@ -64,12 +64,21 @@ blank_user = None
 peg_pixels = 94
 
 #The number of cells per side of the square nonogram
-#grid is set to 32 by default, but may be changed to
-#any number that is a multiple of the total number
-#of aggregated pixels on both sides of the pixelated
-#image. Simply pass in the number of nonogram cells
-#after the "nonogram_cells:" argument when running
-#the code.
+#grid is set to 32 by default (as the standard square
+#base plates measure 32 pegs per side), but may be
+#changed to any number, as long as the total number
+#of pegs in the mosaic is a multiple of that number.
+#That is to say your nonogram grid will fit "x" times
+#within the total width and "y" times in the total
+#height of your final mosaic, where "x" and "y" are
+#both integers. For example, a mosaic with a total
+#width 64 pegs and a height of 128 pegs would require
+#a nonogram grid size of 16 x 16 (16 pegs) or 32 x 32
+#(32 pegs), both of which are common base plate
+#dimensions. Simply pass in the number of nonogram
+#cells after the "nonogram_cells:" argument when
+#running the code (for example: ' py brickogram
+#"nonogram_cells:16" ' for a 16 x 16 peg nonogram grid).
 nonogram_cells = 32
 #The perforations margin is set at the pixel equivalent
 #of 0.75 inch at 300 ppi resolution and will allow for
@@ -311,7 +320,7 @@ with alive_bar(len(img_files)) as bar:
             #that given row). Upon reaching that point, a new empty list is appended
             #to the last row element of the "same_color_side" list and some more
             #same-colored sequences are added in the same fashion, until the end
-            #of the row is reached. The expression "x-math.floor(pixel_size/2))%
+            #of the row is reached. The expression "(x-math.floor(pixel_size/2))%
             #(nonogram_cells*pixel_size) == 0" means that after cancelling the initial
             #offset of "pixel_size/2", the current "x" pixel is a multiple of the
             #pixel size of the pixelated image covered by the nonogram puzzle
@@ -1341,8 +1350,9 @@ with alive_bar(len(img_files)) as bar:
             print(str(e))
             print("\n\n")
             sys.exit('Please ensure that the aggregated pixel count in both dimensions of the ' +
-            'pixelated image are be a multiple of the number of cells per side of the square ' +
-            'nonogram grid. \nFor example, A 1280x2560 px image with 20 px per aggregated pixel ' +
+            'pixelated image matches the number of pegs in the corresponding sides of your mosaic. ' +
+            'These must in turn be a multiple of the dimension of your square nonogram grid. ' +
+            '\nFor example, A 1280x2560 px image with 20 px per aggregated pixel ' +
             'would contain 64x128 aggregated pixels, both of which are a multiple of the default ' +
             'value of "nonogram_cells" of 32 (32 cells by side of the square nonogram grid). ' +
             "Please refer to the Brickogram github page's instructions on how to prepare your" +
