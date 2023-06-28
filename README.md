@@ -69,7 +69,7 @@ py brickogram.py
 ```
 The code will take a few seconds to run, as it is creating two PDF documents containing your puzzle clues for the top and side panels. 
 
-- There are a few arguments that you can pass in after the above command, should you like to get different outputs:
+- There are a few arguments that you could pass in after the above command, should you like to get different outputs:
 
   - In order to print in A4 format instead of US Letter format, simply pass in “A4” when running the code. 
 
