@@ -83,7 +83,7 @@ The code will take a few seconds to run, as it is creating two PDF documents con
 
 - Make sure to place any arguments you pass in within quotes and to include a space in-between arguments when running the Python code.
 
-- When solving the nonogram puzzles, line up your clue pages with the base plate that you will be using as a nonogram grid, using the grey line that is drawn along the long edge of the clue sheets.
+- When solving the nonogram puzzles, line up your clue pages with the base plate that you will be using as a nonogram grid, using the grey lines that are drawn along the long edges of the clue sheets.
 
 - You could choose to bind the clue sheet booklets using 2 x 8 Technic plates with 7 holes and flexible plastic binder rings that would be hooped through the holes. You would need to line up your clue booklets with the base plate that you will be using as a nonogram grid. Then, overlay the 2 x 8 Technic with 7 holes such that it overlaps both the base plate and your page. Draw where the holes will be punched in the paper with a pencil using the Technic plate holes as stencils. This will ensure that your instructions booklets are well aligned with the nonogram grid when you clip them to the base plate.
 
