@@ -36,7 +36,7 @@ will adjust themselves automatically. The "Fonts" folder contains the "Cover Pag
 
 - Make sure that the number of aggregated pixels in each dimension of your pixelated image matches the number of pegs on the corresponding side of your mosaic. For example, starting with a cropped photo measuring 128 x 128 px, each pixel would be merged with its horizontal and vertical neighbor in order to give aggregated pixels of a size of 2 x 2 px. This way, each 1 x 1 plate making up the 64 x 64 peg mosaic would map to an aggregated pixel (128 px / 64 = 2 px).  This is important, as the Python code will “walk” along the image, one aggregated pixel at a time, to determine the color of the pixels in each row and column, so the relative dimension of these must line up with those of your mosaic.
 
-- Also, there should be at least on line of a width of one pixel or at least one isolated pixel surrounded by pixels of a different color in your pixelated image, so that the code may determine how many actual pixels make up an aggregated pixel. The reason for this is that the code "walks" across the image at increments equivalent to the aggregated pixel size, in order to gather a list of all the nonogram clue colors.  
+- Also, there should be at least one line of a width of one pixel or at least one isolated pixel surrounded by pixels of a different color in your pixelated image, so that the code may determine how many actual pixels make up an aggregated pixel. The reason for this is that the code "walks" across the image at increments equivalent to the aggregated pixel size, in order to gather a list of all the nonogram clue colors.  
 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
