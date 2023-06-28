@@ -1046,7 +1046,6 @@ with alive_bar(len(img_files)) as bar:
             #below the "y" coordinate directly below the pasted image.
             y = 375 + string_half_height + title_page_image_height + 225
 
-
             #If you have passed in the "no_blanks" argument when running the code, then
             #the following message will be printed on the title page, using a "x" starting
             #coordinate corresponding to a margin of 0.75 inch.
