@@ -77,7 +77,7 @@ The code will take a few seconds to run, as it is creating two PDF documents con
 
   - The code automatically picks the lightest color in each pixelated image as the blank color for the puzzles making up that mosaic (each mosaic being normally made up of several nonogram grids). In order to specify a different blank color that will be applied to all the pixelated images within the “Images” folder, enter the color after the “blank:” argument, either in hex code or RGB format, the latter being parenthesized (' py brickogram.py "blank:(255,255,255)" ' would select white as the blank for all the images (so for all the nonogram puzzles making up each pixelated image in the "Images" folder). 
 
-    You can also designate a blank color for an individual image by placing the parenthesized RGB value at the end of the file name (my pixelized image name (0,0,0).jpg).
+    You can also designate a blank color for an individual image by placing the parenthesized RGB value at the end of the file name (for instance: 'my pixelized image name (0,0,0).jpg').
 
     Finally, you can choose to have nonograms without any blanks, with all the colors being included in the top and side panel clue sheets, by passing in the “no_blanks” argument when running the code.
 
