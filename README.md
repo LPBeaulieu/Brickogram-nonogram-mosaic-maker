@@ -62,7 +62,7 @@ py -m pip install alive-progress
 
 ## 🎈 Usage <a name="usage"></a>
 
-- Once the pixelated image has been prepared, using <b>Brickogram</b> is actually very easy. Start by placing your pixelated images in the “Images” folder. Next, hold the "Shift" key while right-clicking in your working folder, then select "Open PowerShell window here" to access the PowerShell in your working folder and enter the following:
+- Once the pixelated images have been prepared, using <b>Brickogram</b> is actually very easy. Start by placing your pixelated images in the “Images” folder. Next, hold the "Shift" key while right-clicking in your working folder, then select "Open PowerShell window here" to access the PowerShell in your working folder and enter the following:
 
 ```
 py brickogram.py
