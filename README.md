@@ -34,139 +34,63 @@ will adjust themselves automatically. The "Fonts" folder contains the "Cover Pag
 
   The other subfolders are "Cover Page Subtitle Font" (for the subtitle on the cover page), "Title Page Heading Font" and "Title Page Text Font" (for the heading and body text on the title pages, respectively, "Title Font" (for the headings on the actual clue sheets) and "Numbers Font" (for the clue numbers). It is important that you use a font that has monospaced digits for the numbers font to ensure proper spacing within the clue boxes, but most fonts use monospace digits, so this shouldn't be a problem for you.
 
-- When generating custom palettes with GIMP based on the actual colors of your 1 x 1 plates (see the PDF document for details), you should only select the color of a given 1 x 1 plate once using the “Colour Picker Tool”, and then take note of that hex code for later use in other palettes, or if you mistakenly delete your color palette. This way, all of the colors of the pixelated images that you generate will exactly match those that you initially detected when first creating your palette. Otherwise, the very closely related colors originating from several different “Colour Picker Tool” actions would’t necessarily be equated by the code, resulting in frustration for you down the road, as these different colored clues wouldn’t be merged together (several closely related shades of yellow, for instance).
+- When generating custom palettes with GIMP based on the actual colors of your 1 x 1 plates (see the PDF document for details), you should only select the color of a given 1 x 1 plate once using the “Colour Picker Tool”, and then take note of that hex code for later use in other palettes, or if you mistakenly delete your color palette. This way, all of the colors of the pixelated images that you generate will exactly match those that you initially detected when first creating your palette. Otherwise, the very closely related colors originating from several different “Colour Picker Tool” actions wouldn’t necessarily be equated by the code, resulting in frustration for you down the road, as these different colored clues wouldn’t be merged together (several closely related shades of yellow, for instance).
 
 - Make sure that the number of aggregated pixels in each dimension of your pixelated image should matches the number of pegs on the corresponding side of your mosaic. For example, starting with a cropped photo measuring 128 x 128 px, and each pixel would be merged with its horizontal and vertical neighbor in order to give aggregated pixels of a size of 2 x 2 px. This way, each 1 x 1 plate making up the 64 x 64 peg mosaic would map to an aggregated pixel (128 px / 64 = 2 px).  This is important, as the Python code will “walk” along the image, one aggregated pixel at a time, to determine the color of the pixel, so the relative dimension of these must line up with those of your mosaic.
 
-- Also, there should be at least on line of a width of one pixel or at least one isolated pixel surrounded by pixels of a different color in your pixelated image, so that the code may determine how many actual pixels make up an aggregated pixel. This is important, as the code "walks" across the image at increments equivalent to the agregated pixel size in order to gather a list of all the nonogram clue colors.  
+- Also, there should be at least on line of a width of one pixel or at least one isolated pixel surrounded by pixels of a different color in your pixelated image, so that the code may determine how many actual pixels make up an aggregated pixel. This is important, as the code "walks" across the image at increments equivalent to the aggregated pixel size in order to gather a list of all the nonogram clue colors.  
 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
-The following instructions will be provided in great detail, as they are intended for a broad audience and will
-allow to run a copy of <b>Tintype¶Text</b> on a local computer. Here is a link to an instructional video explaining the steps 1 through 8 described below: https://www.youtube.com/watch?v=FG9WUW6q3dI&list=PL8fAaOg_mhoEZkbQuRgs8MN-QSygAjdil&index=2.
+The following instructions will be provided in great detail, as they are intended for a broad audience and will allow to run a copy of <b>Brickogram</b> on a local computer.
 
-The paths included in the code are formatted for Unix (Linux) operating systems (OS), so the following instructions 
-are for Linux OS environments.
+The instructions below are for Windows operating systems, but the code runs very nicely on Linux as well.
 
-<b>Step 1</b>- Go to the command line in your working folder and install the <b>Atom</b> text editor to make editing the code easier:
-```
-sudo snap install atom --classic
-```
+Start by downloading the zipped working folder, by going to the top of this github repo and clicking on the green "Code" button, and then click on the "Download Zip" option. Extract the zipped folder to your desired location. Next, hold the "Shift" key while right-clicking in your working folder, then select "Open PowerShell window here" to access the PowerShell in your working folder and enter the commands described below. Make sure that you keep the "GIFS" folder within your working folder, in which you will place between 1 and 8 videos, GIFs or other animated image files that you wish to convert into flipbooks.
 
-<b>Step 2</b>- Create a virtual environment (called <i>env</i>) in your working folder:
+<b>Step 1</b>- Install <b>Pillow</b> (Python module to handle the GIFS and other animated image files) using the following command:
+
 ```
-python3 -m venv env
+py -m pip install --upgrade Pillow
 ```
 
-<b>Step 3</b>- Activate the <i>env</i> virtual environment <b>(you will need to do this step every time you use the Python code files)</b> 
-in your working folder:
+<b>Step 2</b>- Install <b>alive-Progress</b> (Python module for a progress bar displayed in command line):
 ```
-source env/bin/activate
-```
-
-<b>Step 4</b>- Install <b>PyTorch</b> (Required Fastai library to convert images into a format usable for deep learning) using the following command (or the equivalent command found at https://pytorch.org/get-started/locally/ suitable to your system):
-```
-pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cpu
+py -m pip install alive-progress
 ```
 
-<b>Step 5</b>- Install the <i>CPU-only</i> version of <b>Fastai</b> (Deep Learning Python library, the CPU-only version suffices for this application, as the character images are very small in size):
-```
-pip install fastai
-```
-
-<b>Step 6</b>- Install <b>OpenCV</b> (Python library for image segmentation):
-```
-pip install opencv-python
-```
-
-<b>Step 7</b>- Install <b>alive-Progress</b> (Python module for a progress bar displayed in command line):
-```
-pip install alive-progress
-```
-
-<b>Step 8</b>- Create the folder "OCR Raw Data" in your working folder:
-```
-mkdir "OCR Raw Data" 
-```
-<b>Step 9</b>- You're now ready to use <b>Tintype¶Text</b>! 🎉
+<b>Step 5</b>- You're now ready to use <b>Brickogram</b>! 🎉
 
 ## 🎈 Usage <a name="usage"></a>
-There are four different Python code files that are to be run in sequence. You can skip ahead to file 4 ("get_predictions.py") if you will be using one of the models in the Google Drive links above. You can find instructions for every Python file in the TintypeText - Typewriter Optical Character Recognition (OCR) playlist on my YouTube channel: https://www.youtube.com/playlist?list=PL8fAaOg_mhoEZkbQuRgs8MN-QSygAjdil.<br><br>
-<b>File 1: "create_rectangles.py"</b>- This Python code enables you to see the segmentation results (the green rectangles delimiting
-the individual characters on the typewritten image) and then write a ".txt" file with the correct labels for each rectangle. The mapping
-of every rectangle to a label will allow to generate a dataset of character images with their corresponding labels. The typewriter
-page images overlaid with the character rectangles are stored in the "Page image files with rectangles" folder, which is created
-automatically by the code.
 
-You might need to <b>alter the values</b> of the variables "<b>character_width</b>" (default value of 55 pixels for 8 1/2" x 11" typewritten pages 
-scanned at a resolution of 600 dpi) and "<b>spacer_between_characters</b>" (default value of 5 pixels), as your typewriter may have a different typeset than those of my typewriters (those two default parameters were suitable for both my <i>2021 Royal Epoch</i> and <i>1968 Olivetti Underwood Lettera 33</i> typewriters). Also, if your typewriter has a lot of ghosting (faint outline of the preceding character) or if the signal to noise ratio is elevated (because of high ink loading on the ribbon leading to lots of ink speckling on the page), the segmentation code might pick up the ghosting or noise as characters. As a result, you could then end up with staggered character rectangles. In the presence of dark typewritten text you should decrease the segmentation sensitivity (increase the number of non-white y pixels required for a given x coordinate in order for that x coordinate to be included in the segmentation). That is to say that on a fresh ribbon of ink, you should increase the value of 3 (illustrated below) to about 6 (results will vary based on your typewriter's signal to noise ratio) in the line 57 of "get_predictions.py" in order to avoid including unwanted noise in the character rectangles. 
+- Once the pixelated image has been prepared, using <b>Brickogram</b> is actually very easy. Start by placing your pixelated images in the “Images” folder. Next, hold the "Shift" key while right-clicking in your working folder, then select "Open PowerShell window here" to access the PowerShell in your working folder and enter the following:
+
 ```
-x_pixels = np.where(line_image >= 3)[0] 
+py brickogram.py
 ```
-When your typewritten text gets fainter, change that digit back to 3 to make the segmentation more sensitive (to avoid omitting characters). These parameters ("character_width", "spacer_between_characters" and "line_image >= 3" should be adjusted in the same way in all the Python code files (except "train_model.py", where they are absent) to ensure consistent segmentation in all steps of the process.
+The code will take a few seconds to run, as it is creating two PDF documents containing your puzzle clues for the top and side panels. 
 
-![Image txt file processing](https://github.com/LPBeaulieu/TintypeText/blob/main/txt%20file%20example.jpg)<hr>
-The image above illustrates the format of the ".txt" file listing all of the character rectangle labels. In the first line, you can note that four of the characters are labeled as "@", which maps to the category "to be deleted". The three letters (C, X and I) have significant ink splattering and will not be included in the training data, as they are not representative of these characters. The fourth "@" on the first line corresponds to an artifact (some noise was above the filtering threshold and was picked up as a character). We also do not want to include it in the training data. The "lesser than" symbol highlighted in yellow on line 11 in the ".txt" file corresponds to an "empty" rectangle, which is mapped to the "space" category in the "Dataset" folder. The very last line of the typewriter scan image contains two typos (two characters overlaid with a hashtag symbol). They are represented by a "~" symbol in the ".txt" file on line 19. All the other character rectangles are represented by their own characters in the ".txt" file. 
-<br><br>
-Importantly, <b>such ".txt" files should be created, modified and saved exclusively in basic text editors</b> (such as Text Editor in Ubuntu 20.04), as more elaborate word processors would include extra formatting information that would interfere with the correct mapping of the character rectangles to their labels in the ".txt" file.
+- There are a few arguments that you can pass in after the above command, should you like to get different outputs. In order to print in A4 format instead of US Letter format, simply pass in “A4” when running the code. 
 
-<b>Furthermore, the ".txt" files in the "Training&Validation Data" folder must have identical names to their corresponding JPEG images (minus the file extensions).</b> For example, the file "my_text.txt" would contain the labels corresponding to the raw scanned typewritten page JPEG image (without the character rectangles) named "my_text.jpg". The presence of hyphens in the file name is only necessary for JPEG files intended for OCR predictions (see below, file 4 "get_predictions.py"), although you could include some hyphens in every file name just as well.
+  - The number of cells per side of the square nonogram grid is set to 32 by default (as the standard square base plates measure 32 pegs per side), but may be changed to any number, as long as the total number of pegs in the mosaic is a multiple of that number. That is to say that your nonogram grid will fit x times within the total width and y times in the total height of your final mosaic, where x and y are both integers. For example, a mosaic with a total width of two 32 x 32 base plates (64 pegs) and a height of four base plates (128 pegs) would require a nonogram grid of 16 x 16 (16 pegs) or 32 x 32 (32 pegs), which are common base plate dimensions. Simply pass in the number of nonogram cells after the "nonogram_cells:" argument when running the code.
 
-<br>
- <b>File 2: "create_dataset.py"</b>- This code will crop the individual characters in the same way as the "create_rectangles.py" code,
- and will then open the ".txt" file containing the labels in order to create the dataset. Each character image will be sorted in its
- label subfolder within the "Dataset" folder, which is created automatically by the code. <br><br>
- A good practice <b>when creating a dataset</b> is to make the ".txt" file and then run the "create_dataset.py" code <b>one page at a time</b> (only one JPEG image and its corresponding ".txt" file at a time in the "Training&Validation Data" folder) to validate that the labels in the ".txt" file line up with the character rectangles on the typewritten text image. Such a validation step involves opening every "Dataset" subfolder and ensuring that every image corresponds to its subfolder label (pro tip: select the icon display option in the folder in order to display the image thumbnails, which makes the validation a whole lot quicker). You will need to delete the "Dataset" folder in between every page, otherwise it will add the labels to the existing ones within the subfolders. This makes it more manageable to correct any mistakes in the writing of the ".txt" files. Of note, some of the spaces are picked up as characters and framed with rectangles. You need to label those spaces with a lesser-than sign ("<"). Here is the list of symbols present in the ".txt" files mapping to the different characters rectangles:
-  
-  - <b>"<"</b>: "blank" character rectangle, which corresponds to a space. These character images are stored in the "space" subfolder within the "Dataset" folder.
-  - <b>"~"</b>: "typo" character rectangle (any character overlaid with "#"). These character images are stored in the "empty" subfolder within the "Dataset" folder. 
-  - <b>"@"</b>: "to be deleted" character rectangle (any undesired artifact or typo that wasn't picked up while typing on the typewriter). The 
-    "to be deleted" subfolder (within the "Dataset" folder) and all its contents is automatically deleted and the characters labeled with "@" in the ".txt" file will be absent
-    from the dataset, to avoid training on this erroneous data.
-  - All the other characters in the ".txt" files are the same as those that you typed on your typewriter. The character images are stored in subfolders within the "Dataset" folder bearing the character's name (e.g. "a" character images are stored in the subfolder named "a").
- 
-  <b>Once you're done validating</b> the individual ".txt" files, you can delete the "Dataset" folder once more, add <b>all of the ".txt" files along with their corresponding JPEG images</b> to the "Training&Validation Data" folder and run the "create_dataset.py" code to get your complete dataset! 
-  
-![Image folder tree structure](https://github.com/LPBeaulieu/TintypeText/blob/main/Folder%20tree%20structure%20image.jpg)<hr>
-The image above shows the folder tree structure of your working folder (above), along with the label subfolders within the "Dataset" folder (below).
- 
-  <br><b>File 3: "train_model.py"</b>- This code will train a convoluted neural network deep learning model from the labeled character images 
-  within the "Dataset" folder. It will also provide you with the accuracy of the model in making OCR predictions, which will be displayed
-  in the command line for every epoch (run through the entire dataset). The default hypeparameters (number of epochs=3, batch size=64, 
-  learning rate=0.005, kernel size=5) were optimal and consistently gave OCR accuracies above 99.8%, provided a good-sized dataset is used (above 25,000 characters).  
-  In my experience with this project, varying the value of any hyperparameter other than the kernel size did not lead to significant variations in accuracy.
-  As this is a simple deep learning task, the accuracy relies more heavily on having good quality segmentation and character images that 
-  accurately reflect those that would be found in text. Ideally, some characters would be typed with a fresh typewriter ribbon and others with an old one,
-  to yield character images of varying boldness, once again reflecting the irregularities normally observed when using a typewriter.
-  
-  When you obtain a model with good accuracy, you should rename it and do a backup of it along with the "Dataset" folder on which it was trained.
-  If you do change the name of the model file, you also need to update its name in the line 174 of "get_predictions.py":
-  ```
-  learn = load_learner(cwd + '/your_model_name')
-  ```
-  <br><b>File 4: "get_predictions.py"</b>- This code will perform OCR on JPEG images of scanned typewritten text (at a resolution of 600 dpi)
-  that you will place in the folder "OCR Raw Data". 
-  
-  <b>Please note that all of the JPEG file names in the "OCR Raw Data" folder must contain at least one hyphen ("-") in order for the code
-  to properly create subfolders in the "OCR Predictions" folder. These subfolders will contain the rich text format (RTF) OCR conversion documents.</b> 
-  
-  The reason for this is that when you will scan a multi-page document in a multi-page scanner, you will provide your scanner with a file root name (e.g. "my_text-") and the scanner will number them automatically (e.g."my_text-.jpg", "my_text-0001.jpg", "my_text-0002.jpg", "my_text-"0003.jpg", etc.) and the code would then label the subfolder within the "OCR Predictions" folder as "my_text". The OCR prediction results for each page will be added in sequence to the "my_text.rtf" file within the "my_text" subfolder of the "OCR Predictions" folder. Should you ever want to repeat the OCR prediction for a set of JPEG images, it would then be important to remove the "my_text" subfolder before running the "get_predictions.py" code once more, in order to avoid appending more text to the existing "my_text.rtf" file.
+  - To specify a different blank color that will be applied to all the pixelated images within the “Images” folder, enter the color after the “blank:” argument, either in hex code or RGB format, the latter being parenthesized (py brickogram.py “blank:(255,255,255)” would select white as the blank for all the images. 
 
-If you changed the name of your deep learning model, or if you are using one of the models that I trained, you will to update the model name within the "get_predictions.py" code. That is to say that you will need to change "typewriter_OCR_cnn_model" for the name of your model in line 174 of "get_predictions.py":
-               
-```              
-learn = load_learner(cwd + '/typewriter_OCR_cnn_model')
-```
-               
-As mentioned above, since fresh typewriter ink ribbons lead to darker text and more ink speckling on the page, in the presence of dark typewritten text you should decrease the segmentation sensitivity (increase the number of non-white y pixels required for a given x coordinate in order for that x coordinate to be included in the segmentation). That is to say that on a fresh ribbon of ink, you should increase the value of 3 (illustrated below) to about 6 (results will vary based on your typewriter's signal to noise ratio) in the line 56 of "get_predictions.py" in order to avoid including unwanted noise in the character rectangles. 
-```
-x_pixels = np.where(line_image >= 3)[0] 
-```
-When your typewritten text gets fainter, change that digit back to 3 to make the segmentation more sensitive (to avoid omitting characters).
+    You can also designate a blank color for an individual image by placing the parenthesized RGB value at the end of the file name (my pixelized image name (0,0,0).jpg).
 
+    Finally, you can choose to have nonograms without any blanks, with all the colors being included in the top and side panel clue sheets, by passing in the “no_blanks” argument when running the code.
+
+- Make sure to place any arguments you pass in within quotes and to include a space in-between arguments when running the Python code.
+
+- When solving the nonogram puzzles, line up your clue page with the base plate that you will be using as a nonogram grid, using the grey line that is drawn along the long edge of the clue sheets.
+
+- You could choose to bind the clue sheet booklets using 2 x 8 Technic plates with 7 holes, with flexible plastic binder rings. You would need to line up your clue booklets with the base plate that you will be using as a nonogram grid. Then, 
+overlay the 2 x 8 Technic with 7 Holes such that it overlaps both the base plate and your page. Draw where the holes will be punched with a pencil using the Technic plate holes as stencils. This will ensure that your instructions booklets are well aligned with the nonogram grid when you clip them to the base plate.
+
+- When solving nonogram puzzles on 32 x 32 base plates, you could subdivide your grid by drawing horizontal and vertical lines on your base plate using my biodegradable and erasable ink (https://www.instructables.com/Recipe-for-a-Multipurpose-Biodegradable-and-Wet-Er/).
         
-  <br><b>And that's it!</b> You're now ready to convert your typewritten manuscript into digital format! You can now type away at the cottage or in the park without worrying about your laptop's battery life 
+  <br><b>And there you have it!</b> You're now ready to turn your favorite pictures into your 
   and still get your document polished up in digital form in the end! 🎉📖
   
   
