@@ -45,9 +45,9 @@ The following instructions will be provided in great detail, as they are intende
 
 The instructions below are for Windows operating systems, but the code runs very nicely on Linux as well.
 
-Start by downloading the zipped working folder, by going to the top of this github repo and clicking on the green "Code" button, and then click on the "Download Zip" option. Extract the zipped folder to your desired location. Next, hold the "Shift" key while right-clicking in your working folder, then select "Open PowerShell window here" to access the PowerShell in your working folder and enter the commands described below. Make sure that you keep the "GIFS" folder within your working folder, in which you will place between 1 and 8 videos, GIFs or other animated image files that you wish to convert into flipbooks.
+Start by downloading the zipped working folder, by going to the top of this github repo and clicking on the green "Code" button, and then click on the "Download Zip" option. Extract the zipped folder to your desired location. Next, hold the "Shift" key while right-clicking in your working folder, then select "Open PowerShell window here" to access the PowerShell in your working folder and enter the commands described below. Make sure that you keep the "Images" and "Font" folders within your working folder. You will place the pixelated images that you wish to be converted into nonograms in the "Images" folder, and the resulting title pages and clue sheets will be appended to the two PDF documents for the top and side panels. These PDF files will be created in the "Image" folder as well.
 
-<b>Step 1</b>- Install <b>Pillow</b> (Python module to handle the GIFS and other animated image files) using the following command:
+<b>Step 1</b>- Install <b>Pillow</b> (Python module to handle the pixelated image files) using the following command:
 
 ```
 py -m pip install --upgrade Pillow
@@ -85,8 +85,7 @@ The code will take a few seconds to run, as it is creating two PDF documents con
 
 - When solving the nonogram puzzles, line up your clue page with the base plate that you will be using as a nonogram grid, using the grey line that is drawn along the long edge of the clue sheets.
 
-- You could choose to bind the clue sheet booklets using 2 x 8 Technic plates with 7 holes, with flexible plastic binder rings. You would need to line up your clue booklets with the base plate that you will be using as a nonogram grid. Then, 
-overlay the 2 x 8 Technic with 7 Holes such that it overlaps both the base plate and your page. Draw where the holes will be punched with a pencil using the Technic plate holes as stencils. This will ensure that your instructions booklets are well aligned with the nonogram grid when you clip them to the base plate.
+- You could choose to bind the clue sheet booklets using 2 x 8 Technic plates with 7 holes, with flexible plastic binder rings. You would need to line up your clue booklets with the base plate that you will be using as a nonogram grid. Then, overlay the 2 x 8 Technic with 7 Holes such that it overlaps both the base plate and your page. Draw where the holes will be punched with a pencil using the Technic plate holes as stencils. This will ensure that your instructions booklets are well aligned with the nonogram grid when you clip them to the base plate.
 
 - When solving nonogram puzzles on 32 x 32 base plates, you could subdivide your grid by drawing horizontal and vertical lines on your base plate using my biodegradable and erasable ink (https://www.instructables.com/Recipe-for-a-Multipurpose-Biodegradable-and-Wet-Er/).
         
