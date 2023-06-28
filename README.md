@@ -1,5 +1,5 @@
 # Brickogram (nonogram mosaic maker)
-This app lets you create nonogram puzzles from pixelated images, for solving using 1x1 plates, giving you stunning mosaics as a result!
+This app lets you create nonogram puzzles from pixelated images, for solving using 1 x 1 plates, giving you stunning mosaics as a result!
 
 ![Brickogram Thumbnail](https://github.com/LPBeaulieu/Brickogram-nonogram-mosaic-maker/blob/main/Brickogram%20Thumbnail.png)
 <h3 align="center">Brickogram</h3>
@@ -26,7 +26,7 @@ This app lets you create nonogram puzzles from pixelated images, for solving usi
 
 ## ⛓️ Limitations <a name = "limitations"></a>
 
-- You can place different True Type Font (".ttf") files in the font folders, should you like to have different fonts in the PDF documents, and their size and spacing
+- You can place different True Type Font (".ttf") files in the subfolders of the "Fonts" folder, should you like to have different fonts in the PDF documents, and their size and spacing
 will adjust themselves automatically. The "Fonts" folder contains the "Cover Page Heading Font" subfolder (for the heading of the the cover pages, the default font being taken from the
 "Nb Pixel Font Bundle 2", check them out at https://nimblebeastscollective.itch.io/nb-pixel-font-bundle).
 
