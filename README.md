@@ -1,5 +1,5 @@
 # Brickogram-nonogram-mosaic-maker
-This app lets you create nonogram puzzles from pixelated images, for solving using 1x1 plates, which give you stunning mosaics as a result!
+This app lets you create nonogram puzzles from pixelated images, for solving using 1x1 plates, giving you stunning mosaics as a result!
 
 ![Brickogram Thumbnail](https://github.com/LPBeaulieu/Brickogram-nonogram-mosaic-maker/blob/main/Brickogram%20Thumbnail.png)
 <h3 align="center">Brickogram</h3>
