@@ -20,40 +20,25 @@ This app lets you create nonogram puzzles from pixelated images, for solving usi
 </p>
 
 ## 📝 Table of Contents
-- [Dependencies / Limitations](#limitations)
+- [Limitations](#limitations)
 - [Getting Started](#getting_started)
 - [Usage](#usage)
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
 
-## ⛓️ Dependencies / Limitations <a name = "limitations"></a>
-- This Python project relies on the Fastai deep learning library (https://docs.fast.ai/) to generate a convoluted neural network 
-  deep learning model, which allows for typewriter optical character recognition (OCR). It also needs OpenCV to perform image segmentation 
-  (to crop the individual characters in the typewritten page images).
-  
-- A deep learning model trained on a specific typewriter is unlikely to generalize well to other typewriter brands, which may use different 
-  typesets and character spacing. It is therefore preferable to train a model on your own typewriter.
-- For best results, the typewritten text should be <b>double spaced</b> to avoid segmentation mistakes or omissions and the 8 1/2" x 11" typewritten pages should be <b>scanned at a resolution of 600 dpi</b>, as this resolution was used when writing the code.
-- Every typewritten line should have <b>at least five adjoining letters</b> in order to be properly detected. Should a line only contain a word with 
-  four or fewer letters, you could make up for the missing letters by using any character (other than "#") overlaid with a hashtag, which will 
-  be interpreted by the code as an empty string, and will not impact the meaningful text on the line in the final rich text format (RTF) document.
-- The <b>hashtag character is reserved</b> for designating typos, as a hyphen or equal sign overlaid with a hashtag are very similar to a hashtag 
-  character by itself and would lead to OCR accuracy loss if it were used as a regular character.
-- The <b>"@" symbol is reserved</b> to designate characters that are to be deleted (see description below) and should not be used on your typewriter, if it has such a type slug. 
-- It should be noted that one of the typewriters with which the code was developed  (1968 Olivetti Underwood Lettera 33) doesn’t have specific type slugs for numbers zero (0) and one (1). After the OCR step, the Python code will interpret whether the surrounding characters are also digits 
-  and assign the values to instances of uppercase “O” and lowercase “L” accordingly. It also converts the uppercase “O” into zero if it is 
-  in one of the closing RTF formatting commands (e.g. \iO is changed to \i0). Even if your typewriter has type slugs for zero and one, make sure that they are very distinct in appearance from the uppercase “O” and lowercase “L” in order to ensure good OCR accuracy. Otherwise, just use the letters instead. Also, the <b>equal sign</b> on the typewriter is interpreted as a <b>backslash</b> if it is followed by a letter or an RTF escape (\\' (ASCII rtf character escape), \\- (hyphenation point) or \\_ (nonbreaking hyphen)), which is useful in RTF commands and escape codes. For an in-depth explanation of all the most common RTF commands and escapes, please consult: https://www.oreilly.com/library/view/rtf-pocket-guide/9781449302047/ch01.html. 
-- To keep things as simple as possible in the (default) <b>basic RTF mode</b> of the "get_predictions.py" code, the use of curly brackets "{}" is disabled and "=par" is changed for "\par\pard" after OCR ("=" is used as there are no backslashes on typewriters). This means that the paragraph-formatting attributes (such as centered alignment, "<i>qc</i>" in the first line of the image above) are returned to their default values automatically when a new paragraph is started by typing "=par" on the typewriter.
-- In the <b>advanced RTF mode</b>, the use of two successive parentheses "(( and ))" is translated to curly braces "{ and }", respectively, in the "get_predictions.py" Python code. Also, "=par" is changed to "\par" in the advanced RTF mode (and not to "\par\pard" as in the basic RTF mode). This allows more flexibility and the use of the curly brackets already limits the scope of the RTF commands, so there is no need to have a "\pard" added automatically. The image below illustrates how to use the parentheses in RTF commands in the advanced RTF mode. 
+## ⛓️ Limitations <a name = "limitations"></a>
 
-![Image RTF advanced mode](https://github.com/LPBeaulieu/Typewriter-OCR-TintypeText/blob/main/TintypeText%20advanced%20rtf%20mode%20image.jpg)<hr>
+- You can place different True Type Font (".ttf") files in the font folders, should you like to have different fonts in the PDF documents, and their size and spacing
+will adjust themselves automatically. The "Fonts" folder contains the "Cover Page Heading Font" subfolder (for the heading of the the cover pages, the default font being taken from the
+"Nb Pixel Font Bundle 2", check them out at https://nimblebeastscollective.itch.io/nb-pixel-font-bundle).
 
-- It is recommended to include a space between your text and the parentheses (single or double, see image above), to reduce segmentation issues due to staggered character rectangles. The Python code automatically removes these spaces (if present) in the final RTF document (see image above). 
+  The other subfolders are "Cover Page Subtitle Font" (for the subtitle on the cover page), "Title Page Heading Font" and "Title Page Text Font" (for the heading and body text on the title pages, respectively, "Title Font" (for the headings on the actual clue sheets) and "Numbers Font" (for the clue numbers). It is important that you use a font that has monospaced digits for the numbers font to ensure proper spacing within the clue boxes, but most fonts use monospace digits, so this shouldn't be a problem for you.
 
-Despite these issues, the code has successfully located characters (segmentation step) on lines with at least 5 successive letters with a success 
-rate above 99.99% for the training/validation data consisting of over 25,000 characters. The only issue reported with the training/validation 
-data was an omitted period. As for the OCR accuracy, it was consistently above 99.8% regardless of the hyperparameters investigated (other than kernel size), provided
-a good-sized dataset is used for training. 
+- When generating custom palettes with GIMP based on the actual colors of your 1 x 1 plates (see the PDF document for details), you should only select the color of a given 1 x 1 plate once using the “Colour Picker Tool”, and then take note of that hex code for later use in other palettes, or if you mistakenly delete your color palette. This way, all of the colors of the pixelated images that you generate will exactly match those that you initially detected when first creating your palette. Otherwise, the very closely related colors originating from several different “Colour Picker Tool” actions would’t necessarily be equated by the code, resulting in frustration for you down the road, as these different colored clues wouldn’t be merged together (several closely related shades of yellow, for instance).
+
+- Make sure that the number of aggregated pixels in each dimension of your pixelated image should matches the number of pegs on the corresponding side of your mosaic. For example, starting with a cropped photo measuring 128 x 128 px, and each pixel would be merged with its horizontal and vertical neighbor in order to give aggregated pixels of a size of 2 x 2 px. This way, each 1 x 1 plate making up the 64 x 64 peg mosaic would map to an aggregated pixel (128 px / 64 = 2 px).  This is important, as the Python code will “walk” along the image, one aggregated pixel at a time, to determine the color of the pixel, so the relative dimension of these must line up with those of your mosaic.
+
+- Also, there should be at least on line of a width of one pixel or at least one isolated pixel surrounded by pixels of a different color in your pixelated image, so that the code may determine how many actual pixels make up an aggregated pixel. This is important, as the code "walks" across the image at increments equivalent to the agregated pixel size in order to gather a list of all the nonogram clue colors.  
 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
