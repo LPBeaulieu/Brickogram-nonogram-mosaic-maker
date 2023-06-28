@@ -892,8 +892,6 @@ with alive_bar(len(img_files)) as bar:
                 #the space taken up by up to 32 clue boxes and the 60-pixel
                 #spacer in-between the "y" coordinate directly below the
                 #title text and the start of the first clue box.
-                # available_vertical_space_for_text = (background_img_height -
-                # (2*non_printable_area_margin + 60 + 32*peg_pixels))
                 available_vertical_space_for_text = (background_img_height -
                 (2*non_printable_area_margin + 60 + 32*peg_pixels))
                 while True:
@@ -916,9 +914,7 @@ with alive_bar(len(img_files)) as bar:
                     string_length, string_height = get_text_font_size(numbers_font, "32")
                     available_space = math.floor(0.85*peg_pixels)
 
-                    if (string_length > available_space or string_height > available_space or
-                    (string_length-available_space)//2 != (string_length-available_space)/2 or
-                    (string_height-available_space)//2 != (string_height-available_space)/2):
+                    if string_length > available_space or string_height > available_space:
                         numbers_font_size -= 1
                         numbers_font = ImageFont.truetype(numbers_font_files[0], numbers_font_size)
                     else:
@@ -1175,7 +1171,9 @@ with alive_bar(len(img_files)) as bar:
 
             #The "margin" variable stores the number of pixels in-between the bottom of the
             #title text and the point where the clue boxes start to be drawn.
-            margin = 60 + string_height
+            #95 pixels seem to align the text nicely such that there is a spacer of around 60-70
+            #pixels.
+            margin = 95 + string_height
 
             #The "for j in range(math.ceil(len(same_color_side)/nonogram_cells))" allows
             #to loop over every different basplate row ("row chunks"). The "current_array"
