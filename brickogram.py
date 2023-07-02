@@ -57,28 +57,28 @@ no_blanks = False
 #in the image file name).
 blank_user = None
 #The pixel side dimensions of a 1x1 plate are stored
-#within the "peg_pixels" variable and will allow the
+#within the "stud_pixels" variable and will allow the
 #nonogram clues to be drawn to scale, so that they
 #could be lined up with the base plate on which the
 #nonogram will be solved.
-peg_pixels = 94
+stud_pixels = 94
 
 #The number of cells per side of the square nonogram
 #grid is set to 32 by default (as the standard square
-#base plates measure 32 pegs per side), but may be
+#base plates measure 32 studs per side), but may be
 #changed to any number, as long as the total number
-#of pegs in the mosaic is a multiple of that number.
+#of studs in the mosaic is a multiple of that number.
 #That is to say your nonogram grid will fit "x" times
 #within the total width and "y" times in the total
 #height of your final mosaic, where "x" and "y" are
 #both integers. For example, a mosaic with a total
-#width 64 pegs and a height of 128 pegs would require
-#a nonogram grid size of 16 x 16 (16 pegs) or 32 x 32
-#(32 pegs), both of which are common base plate
+#width 64 studs and a height of 128 studs would require
+#a nonogram grid size of 16 x 16 (16 studs) or 32 x 32
+#(32 studs), both of which are common base plate
 #dimensions. Simply pass in the number of nonogram
 #cells after the "nonogram_cells:" argument when
 #running the code (for example: ' py brickogram
-#"nonogram_cells:16" ' for a 16 x 16 peg nonogram grid).
+#"nonogram_cells:16" ' for a 16 x 16 stud nonogram grid).
 nonogram_cells = 32
 #The perforations margin is set at the pixel equivalent
 #of 0.75 inch at 300 ppi resolution and will allow for
@@ -258,7 +258,7 @@ with alive_bar(len(img_files)) as bar:
             #pixel size in the pixelated image (how many actual pixels make
             #up an aggregated pixel. For example, a "pixel_size" of 20 pixels
             #per aggregated pixel in a 1280x1280 px image would give a 64 x 64
-            #peg mosaic).
+            #stud mosaic).
             width, height = img.size
 
             #The "color_transitions_x" stores the "x,y" coordinates of any
@@ -473,7 +473,7 @@ with alive_bar(len(img_files)) as bar:
             #The variable "color_transition_threshold" stores the maximal number of clue squares that fit on one
             #row that spans the width of the page (in A4 or US Letter) format, after removing the pixels corresponding
             #to the perforations margin on one side of the page and the non printable margin on the other.
-            color_transition_threshold = math.floor((background_img_width - perforations_margin - non_printable_area_margin)/peg_pixels)
+            color_transition_threshold = math.floor((background_img_width - perforations_margin - non_printable_area_margin)/stud_pixels)
             problematic_rows = []
             current_baseplate_row = 0
             current_y_index = 1
@@ -902,7 +902,7 @@ with alive_bar(len(img_files)) as bar:
                 #spacer in-between the "y" coordinate directly below the
                 #title text and the start of the first clue box.
                 available_vertical_space_for_text = (background_img_height -
-                (2*non_printable_area_margin + 60 + 32*peg_pixels))
+                (2*non_printable_area_margin + 60 + 32*stud_pixels))
                 while True:
                     string_length, string_height = get_text_font_size(title_font,
                     image_name + " (" + top_string + ", " + row_string + " 10, " + column_string + " 10)")
@@ -921,7 +921,7 @@ with alive_bar(len(img_files)) as bar:
                 string_length, string_height = get_text_font_size(numbers_font, "32")
                 while True:
                     string_length, string_height = get_text_font_size(numbers_font, "32")
-                    available_space = math.floor(0.85*peg_pixels)
+                    available_space = math.floor(0.85*stud_pixels)
 
                     if string_length > available_space or string_height > available_space:
                         numbers_font_size -= 1
@@ -930,40 +930,40 @@ with alive_bar(len(img_files)) as bar:
                         break
                 numbers_font = ImageFont.truetype(numbers_font_files[0], numbers_font_size)
 
-                def calculate_correction_pixels(peg_pixels, numbers_font, string):
+                def calculate_correction_pixels(stud_pixels, numbers_font, string):
                     string_length, string_height = get_text_font_size(numbers_font, string)
 
-                    number_image = Image.new("RGB", (peg_pixels, peg_pixels), (255,255,255))
+                    number_image = Image.new("RGB", (stud_pixels, stud_pixels), (255,255,255))
                     number_image_editable = ImageDraw.Draw(number_image)
-                    number_image_editable.text((math.floor(peg_pixels/2),
-                    math.floor(peg_pixels/2)), string, fill="Black",
+                    number_image_editable.text((math.floor(stud_pixels/2),
+                    math.floor(stud_pixels/2)), string, fill="Black",
                     font=numbers_font, anchor="mm", stroke_width=3, stroke_fill="Black")
                     pix = number_image.load()
 
-                    center = math.floor(peg_pixels/2 - string_height/2)
+                    center = math.floor(stud_pixels/2 - string_height/2)
 
-                    number_color_transitions_x = [x for y in range(peg_pixels)
-                    for x in range(peg_pixels) if pix[x,y] == (0,0,0)]
+                    number_color_transitions_x = [x for y in range(stud_pixels)
+                    for x in range(stud_pixels) if pix[x,y] == (0,0,0)]
                     number_color_transitions_x.sort()
 
                     starting_x_pixel = number_color_transitions_x[0]
-                    starting_x_pixel_reverse = peg_pixels - number_color_transitions_x[-1]
+                    starting_x_pixel_reverse = stud_pixels - number_color_transitions_x[-1]
 
                     x_pixel_adjustment = math.floor((starting_x_pixel_reverse - starting_x_pixel)/2)
 
-                    number_color_transitions_y = ([y for x in range(peg_pixels)
-                    for y in range(peg_pixels) if pix[x,y] == (0,0,0)])
+                    number_color_transitions_y = ([y for x in range(stud_pixels)
+                    for y in range(stud_pixels) if pix[x,y] == (0,0,0)])
                     number_color_transitions_y.sort()
 
                     starting_y_pixel = number_color_transitions_y[0]
-                    starting_y_pixel_reverse = peg_pixels - number_color_transitions_y[-1]
+                    starting_y_pixel_reverse = stud_pixels - number_color_transitions_y[-1]
 
                     y_pixel_adjustment = math.floor((starting_y_pixel_reverse - starting_y_pixel)/2)
 
                     return x_pixel_adjustment, y_pixel_adjustment
 
-                x_pixel_adjustment_double_digit, y_pixel_adjustment_double_digit = calculate_correction_pixels(peg_pixels, numbers_font, "32")
-                x_pixel_adjustment_single_digit, y_pixel_adjustment_single_digit = calculate_correction_pixels(peg_pixels, numbers_font, "3")
+                x_pixel_adjustment_double_digit, y_pixel_adjustment_double_digit = calculate_correction_pixels(stud_pixels, numbers_font, "32")
+                x_pixel_adjustment_single_digit, y_pixel_adjustment_single_digit = calculate_correction_pixels(stud_pixels, numbers_font, "3")
 
             #Another background image is generated to create the title page.
             background_img, background_img_width, background_img_height, A4_margin = get_background(A4, A4_margin, side)
@@ -1215,44 +1215,44 @@ with alive_bar(len(img_files)) as bar:
                         #The "starting_x" coordinate of where the clue boxes will start to
                         #be drawn is determined by subtracting the "perforations_margin"
                         #and the number of pixels taken up by all of the clue boxes for
-                        #that row ("len(row_colors)*peg_pixels") from the total width
+                        #that row ("len(row_colors)*stud_pixels") from the total width
                         #of the canvas ("background_img_width").
-                        starting_x = background_img_width - (perforations_margin + len(row_colors)*peg_pixels)
+                        starting_x = background_img_width - (perforations_margin + len(row_colors)*stud_pixels)
                         #The clue boxes are drawn, using the clue color ("element[1]") as the fill.
                         for element in row_colors:
                             background_img_editable.rectangle([starting_x, starting_y,
-                            starting_x+peg_pixels, starting_y+peg_pixels],
+                            starting_x+stud_pixels, starting_y+stud_pixels],
                             fill=element[1])
 
                             number_string = str(element[0])
                             #The number of consecutive same-colored aggregated pixels ("number_string")
                             #is written within the clue boxes.
                             if len(number_string) > 1:
-                                background_img_editable.text((math.floor(starting_x + peg_pixels/2 + x_pixel_adjustment_double_digit),
-                                math.floor(starting_y + peg_pixels/2 + y_pixel_adjustment_double_digit)), number_string, fill="White",
+                                background_img_editable.text((math.floor(starting_x + stud_pixels/2 + x_pixel_adjustment_double_digit),
+                                math.floor(starting_y + stud_pixels/2 + y_pixel_adjustment_double_digit)), number_string, fill="White",
                                 font=numbers_font, anchor="mm", stroke_width=3, stroke_fill="Black")
                             else:
-                                background_img_editable.text((math.floor(starting_x + peg_pixels/2 + x_pixel_adjustment_single_digit),
-                                math.floor(starting_y + peg_pixels/2 + y_pixel_adjustment_single_digit)), number_string, fill="White",
+                                background_img_editable.text((math.floor(starting_x + stud_pixels/2 + x_pixel_adjustment_single_digit),
+                                math.floor(starting_y + stud_pixels/2 + y_pixel_adjustment_single_digit)), number_string, fill="White",
                                 font=numbers_font, anchor="mm", stroke_width=3, stroke_fill="Black")
 
                             #After drawing each box, the "starting_x" corresponding to the top-left
                             #corner "x" coordinate is incremented by the number of pixels taken up
-                            #by a peg on the base plate ("peg_pixels"). The boxes are being drawn
+                            #by a stud on the base plate ("stud_pixels"). The boxes are being drawn
                             #in the direction of the "perforations_margin", as the first clue is
                             #farthest from the perforations.
-                            starting_x += peg_pixels
+                            starting_x += stud_pixels
                         #After each iteration of the "for element in row_colors" loop, the
-                        #"starting_y" is incremented by "peg_pixels", as the rows of clue
+                        #"starting_y" is incremented by "stud_pixels", as the rows of clue
                         #boxes are being drawn from the top to the bottom of the page.
-                        starting_y += peg_pixels
+                        starting_y += stud_pixels
                     #A line spanning the length of all the rows of clue boxes, including
                     #those that only contain blanks is drawn along the "perforations_margin".
                     #this will enable you to line up the clue sheets properly on the base plate
                     #nonogram grid.
                     line_x = background_img_width - perforations_margin
                     background_img_editable.line([(line_x, margin + non_printable_area_margin),
-                    (line_x, margin + non_printable_area_margin + peg_pixels*nonogram_cells)],
+                    (line_x, margin + non_printable_area_margin + stud_pixels*nonogram_cells)],
                     fill=(200,200,200), width=10)
 
                     #The title is added to the page, with the base plate row and column number.
@@ -1291,28 +1291,28 @@ with alive_bar(len(img_files)) as bar:
                         for element in current_array[m][l]:
                             if no_blanks == True or element[1] != blank_tuple:
                                 row_colors.append([element[0], element[1]])
-                        starting_y = background_img_height - (perforations_margin + peg_pixels*len(row_colors))
+                        starting_y = background_img_height - (perforations_margin + stud_pixels*len(row_colors))
                         for element in row_colors:
                             background_img_editable.rectangle([starting_x, starting_y,
-                            starting_x+peg_pixels, starting_y+peg_pixels],
+                            starting_x+stud_pixels, starting_y+stud_pixels],
                             fill=element[1])
 
                             number_string = str(element[0])
                             if len(number_string) > 1:
-                                background_img_editable.text((math.floor(starting_x + peg_pixels/2 + x_pixel_adjustment_double_digit),
-                                math.floor(starting_y + peg_pixels/2 + y_pixel_adjustment_double_digit)), number_string, fill="White",
+                                background_img_editable.text((math.floor(starting_x + stud_pixels/2 + x_pixel_adjustment_double_digit),
+                                math.floor(starting_y + stud_pixels/2 + y_pixel_adjustment_double_digit)), number_string, fill="White",
                                 font=numbers_font, anchor="mm", stroke_width=3, stroke_fill="Black")
                             else:
-                                background_img_editable.text((math.floor(starting_x + peg_pixels/2 + x_pixel_adjustment_single_digit),
-                                math.floor(starting_y + peg_pixels/2 + y_pixel_adjustment_single_digit)), number_string, fill="White",
+                                background_img_editable.text((math.floor(starting_x + stud_pixels/2 + x_pixel_adjustment_single_digit),
+                                math.floor(starting_y + stud_pixels/2 + y_pixel_adjustment_single_digit)), number_string, fill="White",
                                 font=numbers_font, anchor="mm", stroke_width=3, stroke_fill="Black")
 
-                            starting_y += peg_pixels
-                        starting_x += peg_pixels
+                            starting_y += stud_pixels
+                        starting_x += stud_pixels
 
                     line_y = background_img_height - perforations_margin
                     background_img_editable.line([(margin + non_printable_area_margin, line_y),
-                    (margin + non_printable_area_margin + peg_pixels*nonogram_cells, line_y)],
+                    (margin + non_printable_area_margin + stud_pixels*nonogram_cells, line_y)],
                     fill=(200,200,200), width=10)
 
                     background_img_rotated = background_img.rotate(270, expand = True)
@@ -1350,7 +1350,7 @@ with alive_bar(len(img_files)) as bar:
             print(str(e))
             print("\n\n")
             sys.exit('Please ensure that the aggregated pixel count in both dimensions of the ' +
-            'pixelated image matches the number of pegs in the corresponding sides of your mosaic. ' +
+            'pixelated image matches the number of studs in the corresponding sides of your mosaic. ' +
             'These must in turn be a multiple of the dimension of your square nonogram grid. ' +
             '\nFor example, A 1280x2560 px image with 20 px per aggregated pixel ' +
             'would contain 64x128 aggregated pixels, both of which are a multiple of the default ' +
