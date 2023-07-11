@@ -218,7 +218,8 @@ else:
 print("\nCurrently creating a total of " + str(len(img_files)) + " nonograms:\n")
 with alive_bar(len(img_files)) as bar:
     for i in range(len(img_files)):
-        try:
+        #try:
+        for z in range(1):
             #The "blank_user" variable stores your selected blank
             #color that applies to all the images found in the
             #"Images" folder (unless you added a parenthesized
@@ -550,7 +551,7 @@ with alive_bar(len(img_files)) as bar:
                     for j in range(len(problematic_columns)):
                         print("\n- Image aggregated pixel column number " + str(problematic_columns[j][0]) +
                         " (baseplate column number " + str(problematic_columns[j][1]) + ", column number " +
-                        str(problematic_column[j][2]) + ", baseplate row number " +
+                        str(problematic_columns[j][2]) + ", baseplate row number " +
                         str(problematic_columns[j][3]) + ") has a total of " + str(problematic_columns[j][4]) +
                         " color transitions.")
 
@@ -1346,14 +1347,14 @@ with alive_bar(len(img_files)) as bar:
                 append=True, quality=100, resolution=300)
 
             bar()
-        except Exception as e:
-            print(str(e))
-            print("\n\n")
-            sys.exit('Please ensure that the aggregated pixel count in both dimensions of the ' +
-            'pixelated image matches the number of studs in the corresponding sides of your mosaic. ' +
-            'These must in turn be a multiple of the dimension of your square nonogram grid. ' +
-            '\nFor example, A 1280x2560 px image with 20 px per aggregated pixel ' +
-            'would contain 64x128 aggregated pixels, both of which are a multiple of the default ' +
-            'value of "nonogram_cells" of 32 (32 cells by side of the square nonogram grid). ' +
-            "Please refer to the Brickogram github page's instructions on how to prepare your" +
-            'pixelated images.')
+        # except Exception as e:
+        #     print(str(e))
+        #     print("\n\n")
+        #     sys.exit('Please ensure that the aggregated pixel count in both dimensions of the ' +
+        #     'pixelated image matches the number of studs in the corresponding sides of your mosaic. ' +
+        #     'These must in turn be a multiple of the dimension of your square nonogram grid. ' +
+        #     '\nFor example, A 1280x2560 px image with 20 px per aggregated pixel ' +
+        #     'would contain 64x128 aggregated pixels, both of which are a multiple of the default ' +
+        #     'value of "nonogram_cells" of 32 (32 cells by side of the square nonogram grid). ' +
+        #     "Please refer to the Brickogram github page's instructions on how to prepare your" +
+        #     'pixelated images.')
