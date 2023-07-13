@@ -1223,8 +1223,7 @@ with alive_bar(len(img_files)) as bar:
                 lego_starting_y += lego_pixel_size
 
             #A copy of "background_img" is made in order to
-            #crop and save it as the thumbnail image for the
-            #Etsy shop.
+            #crop and save it as the thumbnail image.
             thumbnail = background_img
             thumbnail.crop((lego_initial_starting_x, lego_initial_starting_y, (lego_initial_starting_x +
             lego_image_horizontal_size), (lego_initial_starting_y + lego_image_horizontal_size))).save(os.path.join(cwd, "Images", image_name, image_name + " Thumbnail Image.png"))
@@ -1393,13 +1392,6 @@ with alive_bar(len(img_files)) as bar:
                 math.floor((string_box[3]-string_box[1]))]
                 string_height = string_size[1]
 
-            """START OF PART ONLY VALID FOR MY ETSY SHOP"""
-            #The "y_below_blank_string" will store the "y" coordinate below the blank string,
-            #and adding the "string_height" will allow to crop the required materials properly
-            #without descenders from the blank string.
-            y_below_blank_string = y + string_height
-            """END OF PART ONLY VALID FOR MY ETSY SHOP"""
-
             #The "y" coordinate is incremented by the equivalent of 150 pixels plus the
             #blank string height below the blank string (which had a text anchoring of "ls",
             #meaning that the "y" coordinate is situated at the lower left corner of the string).
@@ -1479,17 +1471,6 @@ with alive_bar(len(img_files)) as bar:
                     font=title_page_text_font, anchor="lt", fill="Black")
                     x = perforations_margin
                     y = 325 + string_height
-
-            """START OF PART ONLY VALID FOR MY ETSY SHOP"""
-            #The required 1 x 1 plates will be cropped and saved as an image to display on the Etsy shop.
-            #The "perforations_margin - 83" is to have 83 pixels on both the left and right sides of the
-            #image, with the default title page body font ("PixNull.ttf"). The "y_required_materials + 75"
-            #is to harmonize the space above with the space below the required materials. The "y + 125 +
-            #string_height" is to include the last row of 1 x 1 plates that was written.
-            materials_image = background_img
-            #materials_image.crop((perforations_margin - 83, y_required_materials + 75, background_img_width, y + 125 + string_height)).save(os.path.join(cwd, "Images", image_name, image_name + " Required 1 x 1 Plates.png"))
-            materials_image.crop((0, y_below_blank_string, background_img_width, y + 125 + string_height)).save(os.path.join(cwd, "Images", image_name, image_name + " Required 1 x 1 Plates.png"))
-            """END OF PART ONLY VALID FOR MY ETSY SHOP"""
 
             #Upon completing the title page, it is appended to both PDF files and
             #a new canvas is opened to start printing the side panel instructions,
