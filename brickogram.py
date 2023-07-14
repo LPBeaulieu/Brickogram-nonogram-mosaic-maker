@@ -430,7 +430,6 @@ with alive_bar(len(img_files)) as bar:
                                 colors[pix[x,y]] = colors[pix[x,y]] + 1
                             else:
                                 colors[pix[x,y]] = 1
-
             #The "same_color_top" list mirrors the "same_color_side" list and gathers the successive
             #aggregated pixels of same color on the "y" axis of the pixelated image, further separating
             #a given column into "row chunks" every time the pixel equivalent of "nonogram_cells" is
@@ -1210,10 +1209,21 @@ with alive_bar(len(img_files)) as bar:
                 for k in range(len(same_color_side[j])):
                     for l in range(len(same_color_side[j][k])):
                         for m in range(same_color_side[j][k][l][0]):
-                            background_img.paste(color_images_dict[same_color_side[j][k][l][1]], (lego_starting_x,lego_starting_y))
-                            #"lego_starting_x" is incremented by "lego_pixel_size" so that
-                            #the next pasted image is to its right.
-                            lego_starting_x += lego_pixel_size
+                            try:
+                                background_img.paste(color_images_dict[same_color_side[j][k][l][1]], (lego_starting_x,lego_starting_y))
+                                #"lego_starting_x" is incremented by "lego_pixel_size" so that
+                                #the next pasted image is to its right.
+                                lego_starting_x += lego_pixel_size
+                            except KeyError as e:
+                                print("\n" + e)
+                                os.exit('There was a problem when generating the mosaic thumbnail and the answer key. ' +
+                                'Either you have forgotten to add the 1 x 1 plate scan of the RGB color listed above to the ' +
+                                '"1 x 1 plate scans" folder (see the PDF document on the Brickogram github page for more details), ' +
+                                'or there were some partially transparent pixels in one of your layers, resulting in a pixel color ' +
+                                'of a different color for those pixels. You would then need to delete these transparent pixels ' +
+                                'and draw them again with full opacity. Transparent pixels can be created when ' +
+                                'you remove the background of a subject and add an alpha channel to your layer.')
+
                 #Upon completing a row, the "x" coordinate is reset to
                 #the "lego_initial_starting_x" and the "lego_starting_y"
                 #is incremented by "lego_pixel_size" so that the next
