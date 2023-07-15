@@ -631,6 +631,7 @@ with alive_bar(len(img_files)) as bar:
                                 str(round(auto_blanks_threshold*100, 1)) + "%. Please select a lower threshold.")
                         #This "for" loop appends the problematic lines that have too many color transitions to
                         #have all of their clues printed out on the clue sheets to the "problematic_rows" list.
+                        row_number_in_mosaic = j*nonogram_cells
                         for l in range(len(current_array)):
                             row_number_in_mosaic += 1
                             number_of_color_transitions = len([element for element in current_array[l][k] if element[1] != blank_tuple])
@@ -674,10 +675,10 @@ with alive_bar(len(img_files)) as bar:
             #A similar approach is used for the "problematic_columns"
             problematic_columns = []
             if auto_blanks:
-                column_number_in_mosaic = 0
                 for j in range(math.ceil(len(same_color_top)/nonogram_cells)):
                     current_array = same_color_top[j*nonogram_cells: j*nonogram_cells + nonogram_cells]
                     for k in range(math.ceil(width/pixel_size/nonogram_cells)):
+                        column_number_in_mosaic = j*nonogram_cells
                         for l in range(len(current_array)):
                             #Note that when accessing the "auto_blanks_grid_blanks"
                             #dictionary within a "for" loop cycling through "same_color_top":, the
@@ -723,7 +724,7 @@ with alive_bar(len(img_files)) as bar:
                     for j in range(len(problematic_rows)):
                         print("\n- Mosaic stud row number " + str(problematic_rows[j][0]) +
                         " (baseplate row number " + str(problematic_rows[j][1]) + ", row number " +
-                        str(problematic_rows[j][2]) + "in the basplate, baseplate column number " +
+                        str(problematic_rows[j][2]) + " in the basplate, baseplate column number " +
                         str(problematic_rows[j][3]) + ") has a total of " + str(problematic_rows[j][4]) +
                         " color transitions.")
 
@@ -736,7 +737,7 @@ with alive_bar(len(img_files)) as bar:
                     for j in range(len(problematic_columns)):
                         print("\n- Mosaic stud column number " + str(problematic_columns[j][0]) +
                         " (baseplate column number " + str(problematic_columns[j][1]) + ", column number " +
-                        str(problematic_columns[j][2]) + "in the baseplate, baseplate row number " +
+                        str(problematic_columns[j][2]) + " in the baseplate, baseplate row number " +
                         str(problematic_columns[j][3]) + ") has a total of " + str(problematic_columns[j][4]) +
                         " color transitions.")
 
