@@ -690,7 +690,7 @@ with alive_bar(len(img_files)) as bar:
                             #If a problematic line has been detected, its location and "number_of_color_transitions"
                             #will be appended to "problematic_rows".
                             if number_of_color_transitions > color_transition_threshold:
-                                problematic_rows.append([column_number_in_mosaic, j+1, l+1, k+1, number_of_color_transitions])
+                                problematic_columns.append([column_number_in_mosaic, j+1, l+1, k+1, number_of_color_transitions])
 
             else:
                 current_baseplate_column = 0
