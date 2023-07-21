@@ -1216,8 +1216,8 @@ with alive_bar(len(img_files)) as bar:
                                 #the next pasted image is to its right.
                                 lego_starting_x += lego_pixel_size
                             except KeyError as e:
-                                print("\n" + e)
-                                os.exit('There was a problem when generating the mosaic thumbnail and the answer key. ' +
+                                print("\n" + str(e))
+                                sys.exit('There was a problem when generating the mosaic thumbnail and the answer key. ' +
                                 'Either you have forgotten to add the 1 x 1 plate scan of the RGB color listed above to the ' +
                                 '"1 x 1 plate scans" folder (see the PDF document on the Brickogram github page for more details), ' +
                                 'or there were some partially transparent pixels in one of your layers, resulting in a pixel color ' +
