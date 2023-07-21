@@ -17,7 +17,7 @@ img_files = glob.glob(path_img)
 img_files = [file for file in img_files if (file[-4:].lower() != ".pdf" and
 "Thumbnail Image" not in file and "Required 1 x 1 Plates" not in file)]
 
-#You can opt to generate the nonobram clud PDF files in A4 format
+#You can opt to generate the nonogram clue PDF files in A4 format
 #by passing in the "A4" argument when running the Python code.
 A4 = False
 #The "A4_margin" variable adds 25 pixels to the "y" coordinate
@@ -329,9 +329,9 @@ with alive_bar(len(img_files)) as bar:
             elif delta_y:
                 pixel_size = minimum_delta_y
             else:
-                sys.exit("Please ensure that your pixelated image has at least one " +
-                "aggregated pixel that is preceded and followed by aggregated pixels " +
-                "of a different color on both the horizontal and vertical axes. " +
+                sys.exit('Please ensure that your pixelated image "' + image_name +
+                '" has at least one aggregated pixel that is preceded and followed by aggregated ' +
+                "pixels of a different color on both the horizontal and vertical axes. " +
                 "This will allow the code to figure out how many actual pixels fit " +
                 "within one of the aggregated pixels.")
 
@@ -611,8 +611,19 @@ with alive_bar(len(img_files)) as bar:
                         #times the number of studs in the nonogram grid ("if sorted_grid_colors[l][1][0] >=
                         #math.ceil(nonogram_cells*nonogram_cells*auto_blanks_threshold)").
                         sorted_grid_colors = sorted(number_grid_colors, key = lambda x:x[0], reverse = True)
+                        blank_color_threshold = math.ceil(nonogram_cells*nonogram_cells*auto_blanks_threshold)
                         for l in range(len(sorted_grid_colors)):
-                            if sorted_grid_colors[l][1][0] >= math.ceil(nonogram_cells*nonogram_cells*auto_blanks_threshold):
+                            #If the current nonogram grid at indices "j" and "k" is only comprised of pixels
+                            #of one color, the following error message is displayed.
+                            if sorted_grid_colors[l][1][0] == nonogram_cells*nonogram_cells:
+                                sys.exit('\n\nThe nonogram grid for the puzzle "' + image_name +
+                                '" found at the baseplate row number ' + str(j+1) +
+                                ' and baseplate column number ' + str(k+1) + ' is only comprised of pixels of the '
+                                'following RGB value:\n' + str(sorted_grid_colors[0][1][1]) +
+                                '\nPlease add at least ' + str(blank_color_threshold) +
+                                ' pixels of another color to your pixelated image ' +
+                                'for that nonogram grid in order for a puzzle to be generated with a blank.')
+                            elif sorted_grid_colors[l][1][0] >= blank_color_threshold:
                                 blank_tuple = sorted_grid_colors[l][1][1]
                                 blank = str(blank_tuple)
                                 auto_blanks_grid_blanks[str(j) + ", " + str(k)] = [blank, blank_tuple]
@@ -623,12 +634,15 @@ with alive_bar(len(img_files)) as bar:
                             elif l == len(sorted_grid_colors)-1:
                                 sorted_grid_colors.sort(key = lambda x:x[1][0], reverse = True)
                                 sys.exit('There is a maximum of ' + str(sorted_grid_colors[0][1][0]) +
-                                ' one by one plates of the folowing RGB value ' + str(sorted_grid_colors[0][1][1]) +
+                                ' one by one plates of the following RGB value ' + str(sorted_grid_colors[0][1][1]) +
                                 ' in the baseplate row number ' + str(j+1) + ' and baseplate column number ' + str(k+1) +
-                                ". This represents a blank percentage of " +
+                                ' of the puzzle "' + image_name + '". This represents a blank percentage of ' +
                                 str(round(sorted_grid_colors[0][1][0]/(nonogram_cells*nonogram_cells)*100, 1)) +
                                 '%, while your specified minimum proportion of one by one plates of the blank was set to ' +
-                                str(round(auto_blanks_threshold*100, 1)) + "%. Please select a lower threshold.")
+                                str(round(auto_blanks_threshold*100, 1)) + "%. Please select a lower threshold or add " +
+                                str(nonogram_cells*nonogram_cells*auto_blanks_threshold - sorted_grid_colors[0][1][0]) +
+                                ' pixels of the color mentioned above to your pixelated image for that nonogram grid.')
+
                         #This "for" loop appends the problematic lines that have too many color transitions to
                         #have all of their clues printed out on the clue sheets to the "problematic_rows" list.
                         row_number_in_mosaic = j*nonogram_cells
@@ -1217,8 +1231,9 @@ with alive_bar(len(img_files)) as bar:
                                 lego_starting_x += lego_pixel_size
                             except KeyError as e:
                                 print("\n" + str(e))
-                                sys.exit('There was a problem when generating the mosaic thumbnail and the answer key. ' +
-                                'Either you have forgotten to add the 1 x 1 plate scan of the RGB color listed above to the ' +
+                                sys.exit('There was a problem when generating the mosaic thumbnail and the answer key for ' +
+                                'the puzzle "' + image_name + '". Either you have forgotten to add the 1 x 1 plate ' +
+                                'scan of the RGB color listed above to the ' +
                                 '"1 x 1 plate scans" folder (see the PDF document on the Brickogram github page for more details), ' +
                                 'or there were some partially transparent pixels in one of your layers, resulting in a pixel color ' +
                                 'of a different color for those pixels. You would then need to delete these transparent pixels ' +
@@ -1687,7 +1702,8 @@ with alive_bar(len(img_files)) as bar:
             print(str(e))
             print("\n\n")
             sys.exit('Please ensure that the aggregated pixel count in both dimensions of the ' +
-            'pixelated image matches the number of studs in the corresponding sides of your mosaic. ' +
+            'pixelated image "' + image_name + '" matches the number of ' +
+            'studs in the corresponding sides of your mosaic. ' +
             'These must in turn be a multiple of the dimension of your square nonogram grid. ' +
             '\nFor example, A 1280x2560 px image with 20 px per aggregated pixel ' +
             'would contain 64x128 aggregated pixels, both of which are a multiple of the default ' +
