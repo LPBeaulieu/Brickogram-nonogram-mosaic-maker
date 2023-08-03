@@ -91,13 +91,11 @@ The code will take a few seconds to run, as it is creating two PDF documents con
 
 - Make sure to place any arguments you pass in within quotes and to include a space in-between arguments when running the Python code.
 
-- When solving the nonogram puzzles, line up your clue pages with the baseplate that you will be using as a nonogram grid, using the grey lines that are drawn along the long edges of the clue sheets, as shown in the image below.
+![Brickogram Puzzle Layout](https://github.com/LPBeaulieu/Brickogram-nonogram-mosaic-maker/blob/main/Github%20Page%20Images/Nonogram%20Clue%20Sheets%20Layout.jpg)<hr>
+When solving the nonogram puzzles, line up your clue pages with the baseplate that you will be using as a nonogram grid, using the grey lines that are drawn along the long edges of the clue sheets, as shown in the image above.
 
-![Brickogram Puzzle Layout](https://github.com/LPBeaulieu/Brickogram-nonogram-mosaic-maker/blob/main/Github%20Page%20Images/Nonogram%20Clue%20Sheets%20Layout.jpg)
-
-- You could use perforated 2 x 6 plates, along with some one-inch plastic binder rings, which would be hooped through the holes on each end of the 2 x 6 plate assemblies (see the image below for an illustration of this), to bind your top and side panel clue sheet booklets and secure them onto the baseplate. You would first need to line up your clue booklets with the baseplate nonogram grid. Then, overlay the 2 x 6 plate assemblies as depicted in the image, such that they overlap both the baseplate and your clue sheets. Draw where the holes will be punched on the sheets with a pencil, using the outer plate holes as stencils. This will ensure that your bound clue sheet booklets will be well aligned with the nonogram grid when you clip them to the baseplate.
-
-![Brickogram Thumbnail](https://github.com/LPBeaulieu/Brickogram-nonogram-mosaic-maker/blob/main/Brickogram%20Thumbnail.png)
+![Fastening Clue Sheets Onto Baseplate](https://github.com/LPBeaulieu/Brickogram-nonogram-mosaic-maker/blob/main/Github%20Page%20Images/Perforated%20Plate%20Fastenings%20Onto%20Nonogram%20Grid.jpg)<hr>
+You could use perforated 2 x 6 plates, along with some one-inch plastic binder rings, which would be hooped through the holes on each end of the 2 x 6 plate assemblies (see the image above for an illustration of this), to bind your top and side panel clue sheet booklets and secure them onto the baseplate. You would first need to line up your clue booklets with the baseplate nonogram grid. Then, overlay the 2 x 6 plate assemblies as depicted in the image, such that they overlap both the baseplate and your clue sheets. Draw where the holes will be punched on the sheets with a pencil, using the outer plate holes as stencils. This will ensure that your bound clue sheet booklets will be well aligned with the nonogram grid when you clip them to the baseplate.
 
 - When solving nonogram puzzles on 32 x 32 baseplates, you could subdivide your grid by drawing horizontal and vertical lines on your baseplate using my biodegradable and erasable ink (https://www.instructables.com/Recipe-for-a-Multipurpose-Biodegradable-and-Wet-Er/).
         
