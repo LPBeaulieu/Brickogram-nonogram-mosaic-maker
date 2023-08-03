@@ -97,7 +97,7 @@ When solving the nonogram puzzles, line up your clue pages with the baseplate th
 ![Fastening Clue Sheets Onto Baseplate](https://github.com/LPBeaulieu/Brickogram-nonogram-mosaic-maker/blob/main/Github%20Page%20Images/Perforated%20Plate%20Fastenings%20Onto%20Nonogram%20Grid.jpg)<hr>
 You could use perforated 2 x 6 plates, along with some one-inch plastic binder rings, which would be hooped through the holes on each end of the 2 x 6 plate assemblies (see the image above for an illustration of this), to bind your top and side panel clue sheet booklets and secure them onto the baseplate. You would first need to line up your clue booklets with the baseplate nonogram grid. Then, overlay the 2 x 6 plate assemblies as depicted in the image, such that they overlap both the baseplate and your clue sheets. Draw where the holes will be punched on the sheets with a pencil, using the outer plate holes as stencils. This will ensure that your bound clue sheet booklets will be well aligned with the nonogram grid when you clip them to the baseplate.<br><br>
         
-<br><b>And there you have it!</b> You're now ready to turn your favorite pictures into fun nonogram puzzles, giving you stunning mosaics that you can hang on your wall! 🎉📖
+<b>And there you have it!</b> You're now ready to turn your favorite pictures into fun nonogram puzzles, giving you stunning mosaics that you can hang on your wall! 🎉📖
   
   
 ## ✍️ Authors <a name = "author"></a>
