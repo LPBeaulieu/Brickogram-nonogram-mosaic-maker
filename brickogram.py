@@ -310,7 +310,7 @@ with alive_bar(len(img_files)) as bar:
                 minimum_delta_x = min(delta_x)
 
             #A similar approach is taken for the vertical "y" axis.
-            color_transitions_y = [[x,y] for x in range(height) for y in range(1, height) if pix[x,y] != pix[x, y-1]]
+            color_transitions_y = [[x,y] for x in range(width) for y in range(1, height) if pix[x,y] != pix[x, y-1]]
             delta_y = [color_transitions_y[i][1] - color_transitions_y[i-1][1]
             for i in range(1, height) if color_transitions_y[i][0] == color_transitions_y[i-1][0]]
 
@@ -494,9 +494,9 @@ with alive_bar(len(img_files)) as bar:
             #"background_image" canvas, minus two times the equivalent of 0.75 inch margin
             #(2*225 px).
             available_horizontal_space_for_lego_image = background_img_width - 450
-            #The top of the "lego mosaic" image will be at 454 px on the "y" axis in order
+            #The top of the "lego mosaic" image will be at 468 px on the "y" axis in order
             #to line it up with the other image on the title page, which starts at the same point.
-            available_vertical_space_for_lego_image = background_img_height - 454
+            available_vertical_space_for_lego_image = background_img_height - 468 - non_printable_area_margin
 
             number_of_vertical_pixels = len(same_color_side)
             #The number of vertical studs in the "lego mosaic" is determined by
@@ -691,7 +691,9 @@ with alive_bar(len(img_files)) as bar:
             if auto_blanks:
                 for j in range(math.ceil(len(same_color_top)/nonogram_cells)):
                     current_array = same_color_top[j*nonogram_cells: j*nonogram_cells + nonogram_cells]
-                    for k in range(math.ceil(width/pixel_size/nonogram_cells)):
+                    #Here, "height" is divided by "pixel_size" and then "nonogram_cells", as we are
+                    #cycling through the nonogram grids on the vertical axis.
+                    for k in range(math.ceil(height/pixel_size/nonogram_cells)):
                         column_number_in_mosaic = j*nonogram_cells
                         for l in range(len(current_array)):
                             #Note that when accessing the "auto_blanks_grid_blanks"
@@ -728,12 +730,12 @@ with alive_bar(len(img_files)) as bar:
             #you will be notified of their location within the pixelated image, so that you could reduce the
             #number of color inflections at those positions.
             if problematic_rows or problematic_columns:
-                print("\n\nA problem has arisen while processing your image: " + image_name + ":")
+                print('\n\nA problem has arisen while processing your image "' + image_name + '":')
                 if problematic_rows:
                     print('\nThe following rows (given as the stud row numbers in the mosaic, ' +
-                    'followed by the baseplate row numbers and the row numbers in those baseplates) have a number of color ' +
-                    'transitions (excluding the blanks) above the maximal amount of ' + str(color_transition_threshold) +
-                    ' that fit on a page.')
+                    'followed by the baseplate row numbers, the row numbers in those baseplates, ' +
+                    'and the baseplate column numbers) have a number of color transitions (excluding the blanks) ' +
+                    'above the maximal amount of ' + str(color_transition_threshold) + ' that fit on a page.')
 
                     for j in range(len(problematic_rows)):
                         print("\n- Mosaic stud row number " + str(problematic_rows[j][0]) +
@@ -744,9 +746,9 @@ with alive_bar(len(img_files)) as bar:
 
                 if problematic_columns:
                     print('\nThe following columns (given as the stud column numbers in the mosaic, ' +
-                    'followed by the baseplate column numbers and the column numbers in those baseplates) have a number of color ' +
-                    'transitions (excluding the blanks) above the maximal amount of ' + str(color_transition_threshold) +
-                    ' that fit on a page.')
+                    'followed by the baseplate column numbers, the column numbers in those baseplates, ' +
+                    'and the baseplate row numbers) have a number of color transitions (excluding the blanks) ' +
+                    'above the maximal amount of ' + str(color_transition_threshold) + ' that fit on a page.')
 
                     for j in range(len(problematic_columns)):
                         print("\n- Mosaic stud column number " + str(problematic_columns[j][0]) +
@@ -1208,8 +1210,8 @@ with alive_bar(len(img_files)) as bar:
             #The "lego_initial_starting_y" sets the "y" coordinate
             #of the top of the "lego mosaic" image, such that it lines up with
             #the "y" coordinate at which the other image starts on the title page
-            #(405 px is used instead of 375 to line them up).
-            lego_initial_starting_y = 405 + string_half_height - 30
+            #("375 + string_half_height").
+            lego_initial_starting_y = 375 + string_half_height
             lego_starting_y = lego_initial_starting_y
             lego_initial_starting_x = lego_starting_x
             #These nested "for" loops will cycle through every row of
@@ -1252,7 +1254,7 @@ with alive_bar(len(img_files)) as bar:
             #crop and save it as the thumbnail image.
             thumbnail = background_img
             thumbnail.crop((lego_initial_starting_x, lego_initial_starting_y, (lego_initial_starting_x +
-            lego_image_horizontal_size), (lego_initial_starting_y + lego_image_horizontal_size))).save(os.path.join(cwd, "Images", image_name, image_name + " Thumbnail Image.png"))
+            lego_image_horizontal_size), (lego_initial_starting_y + lego_image_vertical_size))).save(os.path.join(cwd, "Images", image_name, image_name + " Thumbnail Image.png"))
 
             #Bright green ("Chartreuse") lines will be drawn on the "lego mosaic" image to delineate the different
             #nonogram grids making up the mosaic, provided that the mosaic is composed of more than one nonogram grid
@@ -1266,16 +1268,15 @@ with alive_bar(len(img_files)) as bar:
             if number_of_horizontal_grids > 1:
                 grid_starting_x = lego_initial_starting_x + lego_pixel_size * nonogram_cells
                 for j in range(number_of_horizontal_grids-1):
-                    background_img_editable.line([(grid_starting_x, lego_initial_starting_y - 2*lego_pixel_size),
-                    (grid_starting_x, lego_initial_starting_y + lego_image_vertical_size + 2*lego_pixel_size)], fill = "Chartreuse", width = 5)
+                    background_img_editable.line([(grid_starting_x, lego_initial_starting_y),
+                    (grid_starting_x, lego_initial_starting_y + lego_image_vertical_size)], fill = "Chartreuse", width = 5)
                     grid_starting_x += lego_pixel_size * nonogram_cells
-
 
             if number_of_vertical_grids > 1:
                 grid_starting_y = lego_initial_starting_y + lego_pixel_size * nonogram_cells
                 for j in range(number_of_vertical_grids-1):
-                    background_img_editable.line([(lego_initial_starting_x - 2*lego_pixel_size, grid_starting_y),
-                    (lego_initial_starting_x + lego_image_horizontal_size + 2*lego_pixel_size, grid_starting_y)], fill = "Chartreuse", width = 5)
+                    background_img_editable.line([(lego_initial_starting_x, grid_starting_y),
+                    (lego_initial_starting_x + lego_image_horizontal_size, grid_starting_y)], fill = "Chartreuse", width = 5)
                     grid_starting_y += lego_pixel_size * nonogram_cells
 
             #The "lego mosaic" image page is appended to both PDF documents.
@@ -1513,9 +1514,9 @@ with alive_bar(len(img_files)) as bar:
 
             #The "margin" variable stores the number of pixels in-between the bottom of the
             #title text and the point where the clue boxes start to be drawn.
-            #95 pixels seem to align the text nicely such that there is a spacer of around 60-70
-            #pixels.
-            margin = 95 + string_height
+            #65 pixels seem to align the text nicely to make sure that there is at least
+            #"non-non_printable_area_margin" pixels at the bottom of the page.
+            margin = 65 + string_height
 
             #The "for j in range(math.ceil(len(same_color_side)/nonogram_cells))" allows
             #to loop over every different basplate row ("row chunks"). The "current_array"
@@ -1625,7 +1626,9 @@ with alive_bar(len(img_files)) as bar:
             top_image_objects = []
             for j in range(math.ceil(len(same_color_top)/nonogram_cells)):
                 current_array = same_color_top[j*nonogram_cells: j*nonogram_cells + nonogram_cells]
-                for k in range(math.ceil(width/pixel_size/nonogram_cells)):
+                #Here, "height" is divided by "pixel_size" and then "nonogram_cells", as we are
+                #cycling through the nonogram grids on the vertical axis.
+                for k in range(math.ceil(height/pixel_size/nonogram_cells)):
                     if auto_blanks:
                         #Note that when accessing the "auto_blanks_grid_blanks"
                         #dictionary within a "for" loop cycling through "same_color_top":, the
@@ -1635,12 +1638,12 @@ with alive_bar(len(img_files)) as bar:
 
                     starting_x = margin + non_printable_area_margin
                     for l in range(len(current_array)):
-                        row_colors = []
+                        column_colors = []
                         for element in current_array[l][k]:
                             if no_blanks == True or element[1] != blank_tuple:
-                                row_colors.append([element[0], element[1]])
-                        starting_y = background_img_height - (perforations_margin + stud_pixels*len(row_colors))
-                        for element in row_colors:
+                                column_colors.append([element[0], element[1]])
+                        starting_y = background_img_height - (perforations_margin + stud_pixels*len(column_colors))
+                        for element in column_colors:
                             background_img_editable.rectangle([starting_x, starting_y,
                             starting_x+stud_pixels, starting_y+stud_pixels],
                             fill=element[1])
@@ -1690,7 +1693,6 @@ with alive_bar(len(img_files)) as bar:
 
                     background_img, background_img_width, background_img_height, A4_margin = get_background(A4, A4_margin, side)
                     background_img_editable = ImageDraw.Draw(background_img)
-
             top_image_objects.sort()
             for j in range(len(top_image_objects)):
                 #The final image is outputted in PDF format.
