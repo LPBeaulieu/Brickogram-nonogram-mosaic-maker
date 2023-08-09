@@ -42,7 +42,7 @@ will adjust themselves automatically. The "Fonts" folder contains the "Cover Pag
 
 - Also, there should be at least one line of a width of one pixel or at least one isolated pixel surrounded by pixels of a different color in your pixelated image, so that the code may determine how many actual pixels make up an aggregated pixel. The reason for this is that the code "walks" across the image at increments equivalent to the aggregated pixel size, in order to gather a list of all the nonogram clue colors.
 
-- It goes without saying that 1 x 1 plates are quite small and present a choking hazard to young children and animals, so be mindful of not leaving stray 1 x 1 plates within their reach.   
+- It goes without saying that 1 x 1 plates are quite small and present a choking hazard to young children and animals, so be mindful of not leaving loose 1 x 1 plates within their reach.   
 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
