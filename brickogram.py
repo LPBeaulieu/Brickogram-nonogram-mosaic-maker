@@ -229,7 +229,7 @@ else:
 #clue sheets at the end of the "side_panel_pdf_name"
 #and "top_panel_pdf_name" PDF documents each initially
 #containing a cover page.
-print("\nCurrently creating a total of " + str(len(img_files)) + " nonograms:\n")
+print("\nCurrently creating a total of " + str(len(img_files)) + " nonogram" + "s"*(len(img_files)>1) + ":\n")
 with alive_bar(len(img_files)) as bar:
     for i in range(len(img_files)):
         try:
@@ -262,13 +262,24 @@ with alive_bar(len(img_files)) as bar:
                 blank_tuple = blank_tuple_user
             else:
                 blank = None
+
+            #The file name is extracted from the path, by first
+            #replacing all backslaches with forward slashes
+            #for compatibility with Windows, then splitting
+            #the path along the forward slashes and only
+            #keeping the last element, while removing
+            #the extension (".png"). The split along
+            #periods keeps other periods in the file name,
+            #which is why the re module was used here.
+            image_name = img_files[i].replace("\\", "/").split("/")[-1]
+            image_name = "".join(re.split(r"([.])", image_name)[:-2])
+
             #The code will screen the file name to see whether
             #it ends with a parenthesized RGB value (an opening
             #parenthesis, folowed by one or more digits, a comma,
             #with a space or not before the subsequent digit, and
             #so on). That RGB value would then supersede any other
             #specified blank values for that image.
-            image_name = "".join(img_files[i].split(".")[:-1]).replace("\\", "/").split("/")[-1]
             image_name_blank = re.findall(r"([(]\d+,[ ]?\d+,[ ]?\d+[)]\Z)", image_name)
             if image_name_blank:
                 blank = image_name_blank[0]
@@ -1418,6 +1429,7 @@ with alive_bar(len(img_files)) as bar:
                 string_size = [math.floor((string_box[2]-string_box[0])),
                 math.floor((string_box[3]-string_box[1]))]
                 string_height = string_size[1]
+
 
             #The "y" coordinate is incremented by the equivalent of 150 pixels plus the
             #blank string height below the blank string (which had a text anchoring of "ls",
