@@ -64,13 +64,7 @@ py -m pip install --upgrade Pillow
 py -m pip install alive-progress
 ```
 
-<b>Step 3</b>- Install <b>Glob</b> (Python module to find files on your computer) using the following command:
-
-```
-py -m pip install glob2
-```
-
-<b>Step 4</b>- You're now ready to use <b>Brickogram</b>! 🎉
+<b>Step 3</b>- You're now ready to use <b>Brickogram</b>! 🎉
 
 ## 🎈 Usage <a name="usage"></a>
 
